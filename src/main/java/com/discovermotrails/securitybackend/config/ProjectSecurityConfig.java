@@ -21,7 +21,7 @@ public class ProjectSecurityConfig {
         //csrf disabled here to make basic things work for now. Will need to properly implement into the future
         http.csrf().disable()
                 .authorizeHttpRequests().requestMatchers("/account").authenticated()
-                .requestMatchers("/home", "/register").permitAll()
+                .requestMatchers("/index", "/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();

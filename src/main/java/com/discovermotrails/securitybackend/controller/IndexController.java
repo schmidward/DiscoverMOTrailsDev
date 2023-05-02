@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
 
-    @GetMapping("/home")
+    @GetMapping("/index")
     public String renderHomePage() {
         System.out.println("\n *** USER GET request for the home page");
         return "Hello World!";

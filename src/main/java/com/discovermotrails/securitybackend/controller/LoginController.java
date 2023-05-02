@@ -41,4 +41,8 @@ public class LoginController {
         }
         return response;
     }
+
+    //TODO #1 - GetMapping for basic login page. Includes form
+    //TODO #2 - PostMapping for basic login page
+    //TODO #3 - GetMapping for registration page
 }
