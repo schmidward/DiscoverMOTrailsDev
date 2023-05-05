@@ -4,12 +4,19 @@ import { useRef } from "react";
 import "./App.css";
   
 function App() {
-  const {register, watch, handleSubmit, formState: { errors } } = useForm();
+  const {register, watch, handleSubmit, reset, formState: { errors } } = useForm();
   
+  //Password watcher to see if the two values match up
   const pwd = useRef({});
-  pwd.current = watch("password", "");
+  pwd.current = watch("pwd", "");
 
-  const onSubmit = (data) => console.log(data);
+  //Defining the password pattern we want: UPPERCASE, lowercase, numerals, specials
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  const onSubmit = (data) => {
+    console.log(data); 
+    reset(); // clear form
+  };
     
   return (
     <>
@@ -30,20 +37,25 @@ function App() {
         <label htmlFor="password">Password</label>
         <input type="password" id="pwd" {...register("pwd", {
           required: "Password is required",
-          minLength: {
-            value: 8,
-            message: "Password must have at least 8 characters"
+          pattern: {
+            value: passwordPattern,
+            message: "Password must have at least 8 characters, and upper and a lowercase letter "
           }
         })} />
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.pwd && <span>{errors.pwd.message}</span>}
       </div>
       <div>
-        <label htmlFor="verifyPassword">Verify Password</label>
-        <input type="password" id="verifyPwd" {...register("verifyPwd", {
-          validate: value => value === pwd.current || "The passwords do not match"
-        })} />
-        {errors.verifyPassword && <p>{errors.verifyPassword.message}</p>}
-      </div>
+          <label htmlFor="verifyPwd">Verify Password</label>
+          <input
+            type="password"
+            id="verifyPwd"
+            {...register("verifyPwd", {
+              validate: (value) =>
+                value === pwd.current || "The passwords do not match",
+            })}
+          />
+          {errors.verifyPwd && <p>{errors.verifyPwd.message}</p>}
+        </div>
         
         
         <input type={"submit"} style={{ backgroundColor: "#a1eafb" }} />
