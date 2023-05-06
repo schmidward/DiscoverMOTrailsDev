@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import "./components/DynamicForm.css"
+import "./DynamicForm.css"
 
 function DynamicForm({ model }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
