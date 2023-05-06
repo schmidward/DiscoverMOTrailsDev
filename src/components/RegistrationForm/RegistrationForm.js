@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import { useForm } from "react-hook-form";
 import "./RegistrationForm.css";
   
-function App() {
+function RegistrationForm() {
   const {register, watch, handleSubmit, reset, formState: { errors } } = useForm();
 
   //Password watcher to see if the two values match up
@@ -91,4 +91,4 @@ function App() {
     </>
   );
 }
-export default App;
+export default RegistrationForm;
