@@ -29,24 +29,24 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
         //csrf disabled here to make basic things work for now. Will need to properly implement into the future
-        http.cors().configurationSource(corsConfigurationSource()).and()
-                .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/account", "/secure").authenticated()
-                .requestMatchers("/index", "/register", "/login").permitAll()
+        http.cors().configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration configuration = new CorsConfiguration();
+                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+                        return configuration;
+                    }
+                })
+                .and().csrf().disable()
+                .authorizeHttpRequests().requestMatchers("/account").authenticated()
+                .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000/"));
-        configuration.setAllowedMethods(Collections.singletonList("*"));
-        configuration.setAllowedHeaders(Collections.singletonList("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
     @Bean
