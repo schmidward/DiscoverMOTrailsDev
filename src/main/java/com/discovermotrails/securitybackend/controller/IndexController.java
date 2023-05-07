@@ -12,4 +12,9 @@ public class IndexController {
         return "Hello World!";
     }
 
+    @GetMapping("/secure")
+    public String renderSecureResource() {
+        return "This is a page protected by login";
+    }
+
 }
