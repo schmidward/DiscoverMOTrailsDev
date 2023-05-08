@@ -6,6 +6,7 @@ import Home from './pages/home.js';
 import Login from './pages/login.js';
 import Register from './pages/register.js';
 import Header from './components/header/header.js'
+import SecurePage from './pages/securePage';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Home/>} />
         <Route path="/login" exact element={<Login />} />
-        <Route path="/Register" exact element={<Register />} />
+        <Route path="/register" exact element={<Register />} />
+        <Route path="/secure" exact element={<SecurePage />} />
       </Routes>
       </div>
     </Router>
