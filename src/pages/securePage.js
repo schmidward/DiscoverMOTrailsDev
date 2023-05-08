@@ -4,20 +4,15 @@ import { getProtectedResource } from '../resources/loginFunctions';
 
 function SecurePage() {
     const [data, setData] = useState(null);    
-    const secureApi = 'http://localhost:8080/secure';
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await getProtectedResource(secureApi);
-                setData(response);
-            } catch (error) {
-                //If the request fails, navigate to the login page
-                redirect('./pages/login.js');
-            }
-        }
-        fetchData();
-    });
+    fetch(`http://localhost:8080/secure`)
+    .then((response) => response.text())
+    .then((actualData) => console.log(actualData)
+    );
+    }, []);
 
     if (!data) {
         return <p>Loading...</p>
