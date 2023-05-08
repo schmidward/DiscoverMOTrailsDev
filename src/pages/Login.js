@@ -9,7 +9,7 @@ export default function LoginForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    fetch('http://localhost8080/login', {
+    fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: { 'Content-Type' : 'application/json'},
         body: JSON.stringify({ username: data.username, password: data.pwd })
