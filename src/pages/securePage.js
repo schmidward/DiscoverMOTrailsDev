@@ -15,8 +15,6 @@ function SecurePage() {
             console.log(err.message);
         });
         
-        
-        ;
     }, []);
 
     // if (!response) {
