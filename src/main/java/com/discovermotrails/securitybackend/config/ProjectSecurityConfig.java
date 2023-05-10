@@ -1,5 +1,6 @@
 package com.discovermotrails.securitybackend.config;
 
+import com.discovermotrails.securitybackend.filter.CsrfCookieFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,6 +32,10 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        requestHandler.setCsrfRequestAttributeName("_csrf");
+
+
         //csrf disabled here to make basic things work for now. Will need to properly implement into the future
         http.cors().configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -40,9 +48,12 @@ public class ProjectSecurityConfig {
                         configuration.setMaxAge(3600L);
                         return configuration;
                     }
-                }).and().csrf().ignoringRequestMatchers("/register")
-                .and().authorizeHttpRequests().requestMatchers("/account").authenticated()
-                .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
+                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                    .requestMatchers("/account").authenticated()
+                    .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();
