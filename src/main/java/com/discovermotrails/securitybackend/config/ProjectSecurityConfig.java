@@ -52,7 +52,7 @@ public class ProjectSecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/account").authenticated()
+                    .requestMatchers("/account","/user").authenticated()
                     .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
