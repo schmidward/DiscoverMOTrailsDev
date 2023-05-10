@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+// import axios from 'axios';
 import PropTypes from 'prop-types';
 import './login.css';
 
@@ -39,7 +39,7 @@ export default function Login() {
     console.log(data);
     var basicAuth = 'Basic ' + btoa(data.username + ':' + data.password);
     console.log(basicAuth);
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8080/user', {
       method: 'GET',
       headers: {
         'Authorization': basicAuth
