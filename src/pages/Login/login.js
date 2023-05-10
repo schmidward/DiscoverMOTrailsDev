@@ -17,17 +17,17 @@ import './login.css';
 // }
 
 export default function Login() {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+//   const [username, setUserName] = useState();
+//   const [password, setPassword] = useState();
 
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   const token = await loginUser({
-  //     username,
-  //     password
-  //   });
-  //   setToken(token);
-  // }
+//   const handleSubmit = async e => {
+//     e.preventDefault();
+//     const token = await loginUser({
+//       data.username,
+//       data.password
+//     });
+//     setToken(token);
+//   }
 
   const {
     register,
