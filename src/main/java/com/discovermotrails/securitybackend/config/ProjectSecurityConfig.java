@@ -26,7 +26,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class ProjectSecurityConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //csrf disabled here to make basic things work for now. Will need to properly implement into the future
         http.cors().configurationSource(new CorsConfigurationSource() {
