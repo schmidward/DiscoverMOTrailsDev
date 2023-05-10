@@ -1,5 +1,6 @@
 package com.discovermotrails.securitybackend.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     @GetMapping("/account")
-    public String renderAccountPage() {
+    public ResponseEntity<?> renderAccountPage() {
         System.out.println("\n*** USER GET request for account details");
-        return "Here are the account details from the DB";
+        return ResponseEntity.ok("Here are the details from the DB");
     }
 }

@@ -3,3 +3,13 @@
   "pwd": "12345",
   "role": "user"
 }
+{
+  "email": "eric@example.org",
+  "pwd": "12345",
+  "role": "user"
+}
+{
+  "email": "eric@example.net",
+  "pwd": "12345",
+  "role": "user"
+}
