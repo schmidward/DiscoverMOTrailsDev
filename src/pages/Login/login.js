@@ -40,9 +40,9 @@ export default function Login() {
     var basicAuth = 'Basic ' + btoa(data.username + ':' + data.password);
     console.log(basicAuth);
     fetch('http://localhost:8080/login', {
-      method: 'POST',
+      method: 'GET',
       headers: {
-        'Authorization': '${basicAuth}'
+        'Authorization': basicAuth
     }
     })
     .then(response => response.json())
