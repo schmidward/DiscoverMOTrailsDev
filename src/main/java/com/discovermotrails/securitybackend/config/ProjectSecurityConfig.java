@@ -48,9 +48,9 @@ public class ProjectSecurityConfig {
                         configuration.setMaxAge(3600L);
                         return configuration;
                     }
-                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
+                }).and().csrf().disable()/*((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)*/
                 .authorizeHttpRequests()
                     .requestMatchers("/account","/user").authenticated()
                     .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
