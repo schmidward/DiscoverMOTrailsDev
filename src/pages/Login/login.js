@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import axios from 'axios';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import './login.css';
 
@@ -17,8 +17,8 @@ import './login.css';
 // }
 
 export default function Login() {
-//   const [username, setUserName] = useState();
-//   const [password, setPassword] = useState();
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -35,18 +35,35 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
+/* TODO: Convert login function to axios */
+
+  async function getUser() {
+    try {
+      const response = await axios.get('http://localhost:8080/user', {},{
+      auth: {
+        username: username,
+        password: password
+      },
+      env: {
+        // The FormData class to be used to automatically serialize the payload into a FormData object
+        FormData: window?.FormData 
+      }}
+    );
+    console.log(response);
+    console.log(response.json());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const onSubmit = (data) => {
     console.log(data);
     var basicAuth = 'Basic ' + btoa(data.username + ':' + data.password);
     console.log(basicAuth);
-    fetch('http://localhost:8080/user', {
-      method: 'GET',
-      headers: {
-        'Authorization': basicAuth
-    }
-    })
-    .then(response => response.json())
-    .then(json => console.log(json));
+    setUserName(data.username);
+    setPassword(data.password);
+    getUser();
+    
   }
 
   return (
