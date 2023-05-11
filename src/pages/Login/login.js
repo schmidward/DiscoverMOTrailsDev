@@ -44,10 +44,7 @@ export default function Login() {
         username: username,
         password: password
       },
-      env: {
-        // The FormData class to be used to automatically serialize the payload into a FormData object
-        FormData: window?.FormData 
-      }}
+    }
     );
     console.log(response);
     console.log(response.json());
