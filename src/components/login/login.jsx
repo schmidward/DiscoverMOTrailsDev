@@ -69,6 +69,7 @@ export default function Login() {
   }
 
   return (
+    <>
     <div className='login-wrapper'>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="label-wrapper">
@@ -93,6 +94,7 @@ export default function Login() {
 
 
     </div>
+    </>
   );
 }
 

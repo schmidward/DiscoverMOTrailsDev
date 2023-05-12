@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
 
 import Home from './pages/home.js';
-import Login from './pages/Login/login.js';
-import Register from './pages/register.js';
+import Login from './components/login/login';
+import Register from './components/register/register';
 import Header from './components/header/header.js'
 import SecurePage from './pages/securePage.js';
 import Dashboard from './pages/dashboard.js';
