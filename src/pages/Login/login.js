@@ -4,22 +4,11 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import './login.css';
 
-//TODO: Move this async function to a seperate directory
-// async function loginUser(credentials) {
-//   console.log(credentials);
-//   console.log(JSON.stringify(credentials));
-//   return fetch('http://localhost:8080/login', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json'},
-//     body: JSON.stringify(credentials)
-//   })
-//   .then(data => data.json())
-// }
-
 export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [basicAuth, setBasicAuth] = useState();
+  const [data, setData] = useState();
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -38,22 +27,20 @@ export default function Login() {
 
 /* TODO: Convert login function to axios */
 
-  // async function getUser() {
-  //   try {
-  //     const response = await fetch('http://localhost:8080/user', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //         'Authorization': basicAuth
-  //       }
-  //     }
-  //   );
-  //   console.log(response);
-  //   console.log(response.json());
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  async function getUser(auth) {
+    
+      const data = await (
+        await fetch('http://localhost:8080/user', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': auth
+        
+      }
+      })).json();
+      console.log(data);
+      return data;
+     }
 
   const onSubmit = (data) => {
     console.log(data);
@@ -61,22 +48,23 @@ export default function Login() {
     console.log(auth);
     setBasicAuth(auth);
     console.log(basicAuth);
-    fetch('http://localhost:8080/user', {
-      method: 'GET',
-      headers: {
-        'Authorization': auth
-      }
-    }).then(function(response) { 
-      console.log(response); 
-      return response.json();
-    })
-    .then(function(data) {
-      console.log(data);
-    });
+    // fetch('http://localhost:8080/user', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Authorization': auth
+    //   }
+    // }).then(function(response) { 
+    //   console.log(response); 
+    //   return response.json();
+    // })
+    // .then(function(data) {
+    //   console.log(data);
+    //   setData(data);
+    // });
 
-    // setUserName(data.username);
-    // setPassword(data.password);
-    // getUser();
+    setUserName(data.username);
+    setPassword(data.password);
+    const userData = getUser(auth);
     
   }
 
@@ -102,6 +90,8 @@ export default function Login() {
 
           <input type="submit" value="Log In" />
       </form>
+
+
     </div>
   );
 }
