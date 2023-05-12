@@ -19,6 +19,7 @@ import './login.css';
 export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [basicAuth, setBasicAuth] = useState();
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -37,29 +38,45 @@ export default function Login() {
 
 /* TODO: Convert login function to axios */
 
-  async function getUser() {
-    try {
-      const response = await axios.get('http://localhost:8080/user', {},{
-      auth: {
-        username: username,
-        password: password
-      },
-    }
-    );
-    console.log(response);
-    console.log(response.json());
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // async function getUser() {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/user', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-type': 'application/json',
+  //         'Authorization': basicAuth
+  //       }
+  //     }
+  //   );
+  //   console.log(response);
+  //   console.log(response.json());
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   const onSubmit = (data) => {
     console.log(data);
-    var basicAuth = 'Basic ' + btoa(data.username + ':' + data.password);
+    var auth = 'Basic ' + btoa(data.username + ':' + data.password);
+    console.log(auth);
+    setBasicAuth(auth);
     console.log(basicAuth);
-    setUserName(data.username);
-    setPassword(data.password);
-    getUser();
+    fetch('http://localhost:8080/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': auth
+      }
+    }).then(function(response) { 
+      console.log(response); 
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data);
+    });
+
+    // setUserName(data.username);
+    // setPassword(data.password);
+    // getUser();
     
   }
 
