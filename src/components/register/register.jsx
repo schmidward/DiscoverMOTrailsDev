@@ -5,7 +5,7 @@ import axios from "../../api/axios";
 import './register.css'
 
 // this enforces proper email syntax
-const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 // Must include an UPPERCASE, lowercase, numeral and special character and be more than 8 characters long
 const PWD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*]).{8,}$/;
 const REGISTER_URL = "/register";
@@ -16,8 +16,8 @@ const Register = () => {
 
     const userRef = useRef();
     const errRef = useRef();
-    const [user, setUser] = useState("");
-    const [validName, setValidName] = useState(false);
+    const [email, setEmail] = useState("");
+    const [validEmail, setValidEmail] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
     const [pwd, setPwd] = useState("");
     const [validPwd, setValidPwd] = useState(false);
@@ -27,14 +27,15 @@ const Register = () => {
     const [matchFocus, setMatchFocus] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
+    const role = 'user';
 
     useEffect(() => {
 		userRef.current.focus();
 	}, []);
 
 	useEffect(() => {
-		setValidName(USER_REGEX.test(user));
-	}, [user]);
+		setValidEmail(EMAIL_REGEX.test(email));
+	}, [email]);
 
 	useEffect(() => {
 		setValidPwd(PWD_REGEX.test(pwd));
@@ -43,28 +44,32 @@ const Register = () => {
 
 	useEffect(() => {
 		setErrMsg('');
-	}, [user, pwd, matchPwd]);
+	}, [email, pwd, matchPwd]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const v1 = USER_REGEX.test(user);
+        const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry")
             return; 
         }
+        
+        console.log(JSON.stringify({ email, pwd, role}));
 
         try {
             const response = await axios.post(
                 REGISTER_URL,
-                JSON.stringify({ user, pwd }),
+                /* TODO: Convert into a user object */
+                JSON.stringify({ email, pwd, role }),
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 }
             );
             setSuccess(true);
-            setUser("");
+            //Reset the stored user/password information back to nothing
+            setEmail("");
             setPwd("");
             setMatchPwd("");
         } 
@@ -92,28 +97,28 @@ const Register = () => {
                 </p>
                 <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">
+                    <label htmlFor="email">
                         Email:
                         <FontAwesomeIcon
                         icon={faCheck}
-                        className={ validName ? 'valid' : 'hide' }
+                        className={ validEmail ? 'valid' : 'hide' }
                         />
                         <FontAwesomeIcon
                         icon={faTimes}
                         className={
-                            validName || !user ? "hide" : "invalid"
+                            validEmail || !email ? "hide" : "invalid"
                         }
                         />
                     </label>
                     <input
                         type="text"
-                        id="username"
+                        id="email"
                         ref={userRef}
                         autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                         required
-                        aria-invalid={validName ? "false" : "true"}
+                        aria-invalid={validEmail ? "false" : "true"}
                         aria-describedby="uidnote"
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
@@ -121,7 +126,7 @@ const Register = () => {
                     <p
                         id="uidnote"
                         className={
-                        userFocus && user && !validName
+                        userFocus && email && !validEmail
                             ? "instructions"
                             : "offscreen"
                         }
@@ -217,7 +222,7 @@ const Register = () => {
                     </p>
                     <button
                         disabled={
-                        !validName || !validPwd || !validMatch
+                        !validEmail || !validPwd || !validMatch
                             ? true
                             : false
                         }
