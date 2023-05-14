@@ -13,7 +13,7 @@ html {
 
 body {
   min-height: 100vh;
-  background-color: rgb(255, 184, 30);
+  background-color: rgb(125, 52, 193);
 }
 
 .App {
@@ -34,6 +34,8 @@ section {
   justify-content: flex-start;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.4);
+  margin: auto;
+
 }
 
 form {

@@ -4,8 +4,10 @@ import { faTimes, faCheck, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import axios from "../../api/axios";
 import './register.css'
 
+// this enforces proper email syntax
 const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+// Must include an UPPERCASE, lowercase, numeral and special character and be more than 8 characters long
+const PWD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*]).{8,}$/;
 const REGISTER_URL = "/register";
 
 /* Built from: https://blog.openreplay.com/user-registration-and-login-with-react-and-axios/ */
@@ -91,7 +93,7 @@ const Register = () => {
                 <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                     <label htmlFor="username">
-                        Username:
+                        Email:
                         <FontAwesomeIcon
                         icon={faCheck}
                         className={ validName ? 'valid' : 'hide' }
@@ -125,11 +127,7 @@ const Register = () => {
                         }
                     >
                         <FontAwesomeIcon icon={faInfoCircle} />
-                        4 to 24 characters.
-                        <br />
-                        Must begin with a letter.
-                        <br />
-                        Letters, numbers, underscores, hyphens allowed.
+                        Enter a vaild email in address.
                     </p>
                     <label htmlFor="password">
                         Password:
@@ -164,19 +162,21 @@ const Register = () => {
                         }
                     >
                         <FontAwesomeIcon icon={faInfoCircle} />
-                        8 to 24 characters.
+                        At least 8 characters long.
                         <br />
-                        Must include uppercase and lowercase letters, a
-                        number and a special character.
+                        Must an UPPERCASE a lowercase, a
+                        number, and a special character.
                         <br />
-                        Allowed special characters:{" "}
-                        <span aria-label="exclamation mark">
-                        !
-                        </span>{" "}
-                        <span aria-label="at symbol">@</span>{" "}
-                        <span aria-label="hashtag">#</span>{" "}
-                        <span aria-label="dollar sign">$</span>{" "}
-                        <span aria-label="percent">%</span>
+                        Allowed special characters:
+                        {" "}<span aria-label="number symbol">#</span>
+                        {" "}<span aria-label="question mark">?</span>
+                        {" "}<span aria-label="exclamation mark">!</span>
+                        {" "}<span aria-label="at symbol">@</span>
+                        {" "}<span aria-label="dollar sign">$</span>
+                        {" "}<span aria-label="percent">%</span>
+                        {" "}<span aria-label="caret">^</span>
+                        {" "}<span aria-label="ampersand">&</span>
+                        {" "}<span aria-label="star">*</span>
                     </p>
                     <label htmlFor="confirm_pwd">
                         Confirm Password:
