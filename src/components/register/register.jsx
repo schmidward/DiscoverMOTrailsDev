@@ -4,7 +4,7 @@ import { faTimes, faCheck, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import axios from "../../api/axios";
 import './register.css'
 
-const USER_REGEX = /^\[A-z\][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/register";
 
