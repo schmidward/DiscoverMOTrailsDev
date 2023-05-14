@@ -54,8 +54,6 @@ const Register = () => {
             setErrMsg("Invalid Entry")
             return; 
         }
-        
-        console.log(JSON.stringify({ email, pwd, role}));
 
         try {
             const response = await axios.post(

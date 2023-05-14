@@ -8,7 +8,7 @@ export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [basicAuth, setBasicAuth] = useState();
-  const [data, setData] = useState();
+  const [userData, setUserData] = useState("");
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -29,7 +29,7 @@ export default function Login() {
 
   async function getUser(auth) {
     
-      const data = await (
+      const response = await (
         await fetch('http://localhost:8080/user', {
         method: 'GET',
         headers: {
@@ -37,9 +37,12 @@ export default function Login() {
           'Authorization': auth
         
       }
-      })).json();
+      }));
+      console.log(response);
+      const data = await(response.json());
       console.log(data);
-      return data;
+
+      return setUserData(data);
      }
 
   const onSubmit = (data) => {
@@ -72,6 +75,8 @@ export default function Login() {
     <>
     <div className='login-wrapper'>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          {/* TODO: Reset Login form values after successful login */}
+          
           <div className="label-wrapper">
               <label htmlFor="username">Email: </label>
               <input 
@@ -91,7 +96,11 @@ export default function Login() {
 
           <input type="submit" value="Log In" />
       </form>
-
+        <div>
+          <p>User ID: {userData.id}</p>
+          <p>User Email: {userData.email}</p>
+          <p>Role: {userData.role}</p>
+        </div>
 
     </div>
     </>
