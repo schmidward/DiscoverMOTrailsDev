@@ -1,5 +1,6 @@
 package com.discovermotrails.securitybackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class User {
-
+    //TODO: Update user fields to pass session and cookie information to the frontend
     //All of these fields match what is in the customers table created in the db
     //The generated value annotations need the "native" things in them so that only the backend database will worry about id value generation
     @Id
@@ -16,6 +17,7 @@ public class User {
     @GenericGenerator(name = "native",strategy = "native")
     private int id;
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
     private String role;
 

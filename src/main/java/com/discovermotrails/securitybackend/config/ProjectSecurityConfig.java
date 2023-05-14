@@ -32,8 +32,8 @@ public class ProjectSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
+//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
 
 
         //csrf disabled here to make basic things work for now. Will need to properly implement into the future
@@ -53,7 +53,7 @@ public class ProjectSecurityConfig {
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)*/
                 .authorizeHttpRequests()
                     .requestMatchers("/account","/user").authenticated()
-                    .requestMatchers("/index", "/register", "/login", "/secure").permitAll()
+                    .requestMatchers("/index", "/register", "/secure").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();

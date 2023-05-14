@@ -7,12 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class LoginController {
@@ -48,12 +46,16 @@ public class LoginController {
 
     @RequestMapping("/user")
     public User getUserDetailsAfterLogin(Authentication authentication) {
-        List<User> users = userRepository.findByEmail(authentication.getName());
-        if (users.size() > 0) {
-            return users.get(0);
-        } else {
-            return null;
+        User loadedUser = null;
+        Optional<User> optionalUser = userRepository.findByEmail(authentication.getName());
+        if (optionalUser.isPresent()) {
+            loadedUser = optionalUser.get();
         }
+//        else {
+//            //TODO: Add error handling when there is no user present.
+//        }
+        return loadedUser;
+
     }
 
     //TODO #1 - GetMapping for basic login page. Includes form

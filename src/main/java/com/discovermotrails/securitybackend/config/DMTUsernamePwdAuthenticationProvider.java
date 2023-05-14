@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class DMTUsernamePwdAuthenticationProvider implements AuthenticationProvider {
 
@@ -29,11 +31,12 @@ public class DMTUsernamePwdAuthenticationProvider implements AuthenticationProvi
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        List<User> user = userRepository.findByEmail(username);
-        if (user.size() > 0) {
-            if (passwordEncoder.matches(pwd, user.get(0).getPwd())) {
+        Optional<User> optionalUser = userRepository.findByEmail(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(pwd, user.getPwd())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(user.get(0).getRole()));
+                authorities.add(new SimpleGrantedAuthority(user.getRole()));
                 return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
             } else {
                 throw new BadCredentialsException("Invalid credentials");
