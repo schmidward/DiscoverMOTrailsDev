@@ -34,7 +34,7 @@ public class DMTUsernamePwdAuthenticationProvider implements AuthenticationProvi
         Optional<User> optionalUser = userRepository.findByEmail(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (passwordEncoder.matches(pwd, user.getPwd())) {
+            if (passwordEncoder.matches(pwd, user.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(user.getRole()));
                 return new UsernamePasswordAuthenticationToken(username, pwd, authorities);

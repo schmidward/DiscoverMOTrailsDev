@@ -1,6 +1,8 @@
 package com.discovermotrails.securitybackend.controller;
 
+import com.discovermotrails.securitybackend.model.Authority;
 import com.discovermotrails.securitybackend.model.User;
+import com.discovermotrails.securitybackend.repository.AuthorityRepository;
 import com.discovermotrails.securitybackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class LoginController {
@@ -19,16 +23,29 @@ public class LoginController {
     UserRepository userRepository;
 
     @Autowired
+    AuthorityRepository authorityRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity processRegisterUser(@RequestBody User user){
         System.out.println("\n ***USER POST request to add a user to the backend database");
         User savedUser = null;
+        Set<Authority> authorities = new HashSet<>();
         ResponseEntity response = null;
         try {
-            String hashPwd = passwordEncoder.encode(user.getPwd());
+            String hashPwd = passwordEncoder.encode(user.getPassword());
             user.setPwd(hashPwd);
+            if (user.getRole().equals("user")) {
+                authorities.add(authorityRepository.findByAuthority("ROLE_USER"));
+                user.setAuthorities(authorities);
+            }
+            if (user.getRole().equals("admin")) {
+                authorities.add(authorityRepository.findByAuthority("ROLE_ADMIN"));
+                user.setAuthorities(authorities);
+            }
+
             savedUser = userRepository.save(user);
 
             if (savedUser.getId() > 0) {

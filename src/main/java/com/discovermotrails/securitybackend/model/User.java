@@ -1,35 +1,25 @@
 package com.discovermotrails.securitybackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Set;
 
 @Entity
-public class User {
-    //TODO: Update user fields to pass session and cookie information to the frontend
-    //All of these fields match what is in the customers table created in the db
+public class User extends AbstractEntity implements UserDetails {
+    //TODO: Create abstract entity to extend for the model classes
+
     //The generated value annotations need the "native" things in them so that only the backend database will worry about id value generation
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO, generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
-    private int id;
+
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
     private String role;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
@@ -37,7 +27,8 @@ public class User {
         this.email = email;
     }
 
-    public String getPwd() {
+    @Override
+    public String getPassword() {
         return pwd;
     }
 
@@ -53,4 +44,36 @@ public class User {
         this.role = role;
     }
 
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
+
+    @Override
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
