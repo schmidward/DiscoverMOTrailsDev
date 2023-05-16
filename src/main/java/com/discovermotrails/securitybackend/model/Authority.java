@@ -1,7 +1,9 @@
 package com.discovermotrails.securitybackend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
@@ -11,12 +13,13 @@ public class Authority extends AbstractEntity implements GrantedAuthority {
 
     private String authority;
 
-    @ManyToMany(mappedBy = "authorities")
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private User user;
 
-    public Authority(String authority, List<User> users) {
+    public Authority(String authority, User user) {
         this.authority = authority;
-        this.users = users;
+        this.user = user;
     }
 
     public Authority() {}

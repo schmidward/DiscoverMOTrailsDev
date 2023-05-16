@@ -1,6 +1,7 @@
 package com.discovermotrails.securitybackend.config;
 
 
+import com.discovermotrails.securitybackend.model.Authority;
 import com.discovermotrails.securitybackend.model.User;
 import com.discovermotrails.securitybackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class DMTUsernamePwdAuthenticationProvider implements AuthenticationProvider {
@@ -35,15 +37,21 @@ public class DMTUsernamePwdAuthenticationProvider implements AuthenticationProvi
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (passwordEncoder.matches(pwd, user.getPassword())) {
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(user.getRole()));
-                return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
+                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(user.getAuthorities()));
             } else {
                 throw new BadCredentialsException("Invalid credentials");
             }
         } else {
             throw new BadCredentialsException("No User registered with these details.");
         }
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+        }
+        return grantedAuthorities;
     }
 
     @Override
