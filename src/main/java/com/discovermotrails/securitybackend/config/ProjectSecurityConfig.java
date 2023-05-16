@@ -1,6 +1,8 @@
 package com.discovermotrails.securitybackend.config;
 
 import com.discovermotrails.securitybackend.filter.CsrfCookieFilter;
+import com.discovermotrails.securitybackend.filter.JWTTokenGeneratorFilter;
+import com.discovermotrails.securitybackend.filter.JWTTokenValidatorFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,6 +53,8 @@ public class ProjectSecurityConfig {
                 }).and().csrf().disable()/*((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)*/
+//                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                     .requestMatchers("/account","/user").authenticated()
                     .requestMatchers("/index", "/register", "/secure").permitAll()
