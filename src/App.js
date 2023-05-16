@@ -25,8 +25,6 @@ function App() {
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
         <Route path="/secure" exact element={<SecurePage />} />
-        <Route path="/dashboard" exact element={< Dashboard />} />
-        <Route path="/preferences" exact element={< Preferences />} /> 
       </Routes>
       </div>
     </Router>

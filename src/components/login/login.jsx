@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import './login.css';
 
 export default function Login() {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [basicAuth, setBasicAuth] = useState();
   const [userData, setUserData] = useState("");
 
@@ -27,30 +27,34 @@ export default function Login() {
 
 /* TODO: Convert login function to axios */
 
-  async function getUser(auth) {
+  async function getUser(username, password) {
     
       const response = await (
-        await fetch('http://localhost:8080/user', {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': auth
+        axios.get('http://localhost:8080/user', {
+        auth: {
+          username: username,
+          password: password
+        }
         
       }
-      }));
+      ));
       console.log(response);
-      const data = await(response.json());
-      console.log(data);
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
 
-      return setUserData(data);
+
+      return response.data;
      }
 
   const onSubmit = (data) => {
     console.log(data);
     var auth = 'Basic ' + btoa(data.username + ':' + data.password);
     console.log(auth);
-    setBasicAuth(auth);
-    console.log(basicAuth);
+    setUserName(data.username);
+    setPassword(data.password);
+    console.log(username);
+    console.log(password);
     // fetch('http://localhost:8080/user', {
     //   method: 'GET',
     //   headers: {
@@ -65,9 +69,8 @@ export default function Login() {
     //   setData(data);
     // });
 
-    setUserName(data.username);
-    setPassword(data.password);
-    const userData = getUser(auth);
+    
+    const userData = getUser(data.username, data.password);
     
   }
 
@@ -98,7 +101,7 @@ export default function Login() {
       </form>
         <div>
           <p>User ID: {userData.id}</p>
-          <p>User Email: {userData.email}</p>
+          <p>User Email: {userData.username}</p>
           <p>Role: {userData.role}</p>
         </div>
 
