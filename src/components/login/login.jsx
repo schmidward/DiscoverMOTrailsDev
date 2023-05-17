@@ -43,7 +43,7 @@ export default function Login() {
       console.log(response);
       console.log(response.headers['x-xsrf-token']);
       setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
-      setCookie('Authorization', response.headers.authorization, { maxAge: 30}); //maxAge can be useful in forcing login operation
+      setCookie('Authorization', response.headers.authorization, { maxAge: 30}); //maxAge counts in seconds
       console.log(cookies);
       if (response.headers.authorization) {
         localStorage.setItem("user", JSON.stringify(response.data));
