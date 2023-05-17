@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import './login.css';
 import { useCookies } from 'react-cookie';
 
+
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +28,8 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
-/* TODO: Convert login function to axios */
+
+
 
   async function getUser(username, password) {
     
@@ -43,7 +45,7 @@ export default function Login() {
       console.log(response);
       console.log(response.headers['x-xsrf-token']);
       setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
-      setCookie('Authorization', response.headers.authorization, { maxAge: 30}); //maxAge counts in seconds
+      setCookie('Authorization', response.headers.authorization, { maxAge: 30000}); //maxAge counts in seconds
       console.log(cookies);
       if (response.headers.authorization) {
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -61,20 +63,6 @@ export default function Login() {
     setPassword(data.password);
     console.log(username);
     console.log(password);
-    // fetch('http://localhost:8080/user', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Authorization': auth
-    //   }
-    // }).then(function(response) { 
-    //   console.log(response); 
-    //   return response.json();
-    // })
-    // .then(function(data) {
-    //   console.log(data);
-    //   setData(data);
-    // });
-
     
     const userData = getUser(data.username, data.password);
     
