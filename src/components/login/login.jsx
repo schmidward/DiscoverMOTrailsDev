@@ -41,8 +41,8 @@ export default function Login() {
       }
       ));
       console.log(response);
-      console.log(response.headers);
-  
+      console.log(response.headers['x-xsrf-token']);
+      setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
       console.log(cookies);
       if (response.headers.authorization) {
         localStorage.setItem("user", JSON.stringify(response.data));
