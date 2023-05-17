@@ -38,11 +38,11 @@ public class LoginController {
             String hashPwd = passwordEncoder.encode(user.getPassword());
             user.setPwd(hashPwd);
             if (user.getRole().equals("user")) {
-                authorities.add(authorityRepository.findByAuthority("ROLE_USER"));
+                authorities.add(authorityRepository.findByAuthority("USER"));
                 user.setAuthorities(authorities);
             }
             if (user.getRole().equals("admin")) {
-                authorities.add(authorityRepository.findByAuthority("ROLE_ADMIN"));
+                authorities.add(authorityRepository.findByAuthority("ADMIN"));
                 user.setAuthorities(authorities);
             }
 

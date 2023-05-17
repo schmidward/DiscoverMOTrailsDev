@@ -45,7 +45,7 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
     private Set<Authority> authorities;
 
     @Override

@@ -14,7 +14,6 @@ public class Authority extends AbstractEntity implements GrantedAuthority {
     private String authority;
 
     @ManyToOne
-    @JoinColumn(name = "users_id")
     private User user;
 
     public Authority(String authority, User user) {
