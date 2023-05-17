@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './header.css'
+import { useUserContext } from '../../context/userContext';
 
 function Header() {
+    const {user} = useUserContext();
+    console.log(user);
     return (
         <header>
             <div className='header-container'>
             <div className='logo'>
-                <Link to="/"><h1>DiscoverMOTrails</h1></Link>
+                {/* <Link to="/">DiscoverMOTrails</Link> */}
+                <h1>Welcome {user.name} to DiscoverMOTrails</h1>
             </div>
                 <nav>
                     <ul className='nav-links'>

@@ -7,6 +7,7 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import Header from './components/header/header.js'
 import SecurePage from './pages/securePage.js';
+import { UserContextProvider } from './context/userContext';
 
 function App() {
   
@@ -17,17 +18,20 @@ function App() {
   // }
 
   return (
+    
+  <UserContextProvider>
     <Router>
       <div>
         <Header />
       <Routes>
-        <Route path="/" exact element={<Home/>} />
-        <Route path="/login" exact element={<Login />} />
-        <Route path="/register" exact element={<Register />} />
-        <Route path="/secure" exact element={<SecurePage />} />
+          <Route path="/" exact element={<Home/>} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/secure" exact element={<SecurePage />} />
       </Routes>
       </div>
     </Router>
+  </UserContextProvider>
   );
     
 }
