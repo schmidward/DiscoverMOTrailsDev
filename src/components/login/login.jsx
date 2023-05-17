@@ -10,7 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [basicAuth, setBasicAuth] = useState();
   const [userData, setUserData] = useState("");
-  const [cookies, setCookie] = useCookies(['XSRF-TOKEN'])
+  const [cookies, setCookie] = useCookies(['XSRF-TOKEN', 'Authorization'])
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -43,6 +43,7 @@ export default function Login() {
       console.log(response);
       console.log(response.headers['x-xsrf-token']);
       setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
+      setCookie('Authorization', response.headers.authorization, { maxAge: 30}); //maxAge can be useful in forcing login operation
       console.log(cookies);
       if (response.headers.authorization) {
         localStorage.setItem("user", JSON.stringify(response.data));
