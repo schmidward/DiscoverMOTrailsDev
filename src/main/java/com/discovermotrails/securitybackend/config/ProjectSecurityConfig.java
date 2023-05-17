@@ -50,7 +50,7 @@ public class ProjectSecurityConfig {
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+                        configuration.setExposedHeaders(Arrays.asList("Authorization", "X-XSRF-TOKEN"));
                         configuration.setMaxAge(3600L);
                         return configuration;
                     }
