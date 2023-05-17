@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import './login.css';
+import { useCookies } from 'react-cookie';
 
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [basicAuth, setBasicAuth] = useState();
   const [userData, setUserData] = useState("");
+  const [cookies, setCookie] = useCookies(['XSRF-TOKEN'])
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
@@ -39,7 +41,10 @@ export default function Login() {
       }
       ));
       console.log(response);
-      if (response.data.accessToken) {
+      console.log(response.headers);
+  
+      console.log(cookies);
+      if (response.headers.authorization) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
