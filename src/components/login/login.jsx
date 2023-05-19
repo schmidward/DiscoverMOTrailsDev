@@ -1,110 +1,106 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import React, { useRef, useState, useEffect, useContext } from "react";
+import axios from "../../api/axios";
 import './login.css';
 import { useCookies } from 'react-cookie';
+import { useUserContext } from "../../context/userContext";
 
+const LOGIN_URL = '/user';
 
-export default function Login() {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [basicAuth, setBasicAuth] = useState();
-  const [userData, setUserData] = useState("");
+const Login = () => {
+  const {user, logIn} = useUserContext();
+	const userRef = useRef();
+	const errRef = useRef();
+
+	const [formUser, setFormUser] = useState('');
+	const [pwd, setPwd] = useState('');
+	const [errMsg, setErrMsg] = useState('');
+	const [success, setSuccess] = useState(false);
   const [cookies, setCookie] = useCookies(['XSRF-TOKEN', 'Authorization'])
 
-//   const handleSubmit = async e => {
-//     e.preventDefault();
-//     const token = await loginUser({
-//       data.username,
-//       data.password
-//     });
-//     setToken(token);
-//   }
+	useEffect(() => {
+		userRef.current.focus();
+	}, []);
 
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm();
+	useEffect(() => {
+		setErrMsg('');
+	}, [formUser, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await (
+      axios.get(LOGIN_URL, {
+      auth: {
+        username: formUser,
+        password: pwd
+      }
+      
+    }
+    ));
+    console.log(response);
+    setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
+    setCookie('Authorization', response.headers.authorization, { maxAge: 30000}); //maxAge counts in seconds
+    logIn(response.data.id, "dummy display name", response.data.username, response.data.password, response.data.isLoggedIn);
+
+    setFormUser('');
+		setPwd('');
+		setSuccess(true);
+  }
 
   /* TODO: SET global authorization header for Axios
      TODO: Set user infomration based on login */
 
 
-  async function getUser(username, password) {
-    
-      const response = await (
-        axios.get('http://localhost:8080/user', {
-        auth: {
-          username: username,
-          password: password
-        }
-        
-      }
-      ));
-      console.log(response);
-      console.log(response.headers['x-xsrf-token']);
-      setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
-      setCookie('Authorization', response.headers.authorization, { maxAge: 30000}); //maxAge counts in seconds
-      console.log(cookies);
-      if (response.headers.authorization) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-
-
-      return response.data;
-     }
-
-  const onSubmit = (data) => {
-    console.log(data);
-    var auth = 'Basic ' + btoa(data.username + ':' + data.password);
-    console.log(auth);
-    setUserName(data.username);
-    setPassword(data.password);
-    console.log(username);
-    console.log(password);
-    
-    const userData = getUser(data.username, data.password);
-    
-  }
 
   return (
     <>
-    <div className='login-wrapper'>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          {/* TODO: Reset Login form values after successful login */}
-          
-          <div className="label-wrapper">
-              <label htmlFor="username">Email: </label>
-              <input 
-              type="text" 
-              id="username" 
-              {...register("username", { required: true })}
-              />
-          </div>
-
-          <div className="label-wrapper">
-              <label htmlFor="password">Password:</label>
-              <input 
-              type="password" 
-              id="password" 
-              {...register("password", { required: true })} />
-          </div>
-
-          <input type="submit" value="Log In" />
-      </form>
+      <section>
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <h1>Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="username">Email:</label>
+            <input
+              type="text"
+              id="username"
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setFormUser(e.target.value)}
+              value={formUser}
+              required
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              required
+            />
+            <button>Sign In</button>
+          </form>
+          <p>
+            Need an Account? 
+            <br />
+            <span className="line">
+              <a href="/register">Sign Up</a>
+            </span>
+          </p>
+        </section>
+    
+    
+   
         <div>
-          <p>User ID: {userData.id}</p>
-          <p>User Email: {userData.username}</p>
-          <p>Role: {userData.role}</p>
+          <p>User ID: {user.id}</p>
+          <p>User display name: {user.displayName}</p>
+          <p>User Email: {user.email}</p>
         </div>
-
-    </div>
     </>
   );
 }
 
-// Login.propTypes = {
-//   setToken: PropTypes.func.isRequired
-// }
+export default Login;

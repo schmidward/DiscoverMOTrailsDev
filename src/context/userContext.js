@@ -13,8 +13,8 @@ const USER = new User(0, "Guest",      "",      "",      false);
 export function UserContextProvider({ children }) {
     const [user, setUser] = useState(USER);
     
-    function logIn(username) {
-        setUser({name: username, isGuestUser: false})
+    function logIn(id, displayName, email, password, isLoggedIn) {
+        setUser(new User(id, displayName, email, password, isLoggedIn));
     }
     function logOut() {
         setUser(USER);
