@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { createContext, useState } from "react";
+import User from "./user";
 
 export const userContext = createContext({
     user: null,
     logIn: () => {},
     logOut: () => {} 
 });
-
-const USER = {name: "Guest", isGuestUser: true}
+                  // id, displayName, email, password, isLoggedIn
+const USER = new User(0, "Guest",      "",      "",      false);
 
 export function UserContextProvider({ children }) {
     const [user, setUser] = useState(USER);

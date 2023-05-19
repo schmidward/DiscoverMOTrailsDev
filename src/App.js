@@ -9,6 +9,10 @@ import Header from './components/header/header.js'
 import SecurePage from './pages/securePage.js';
 import { UserContextProvider } from './context/userContext';
 
+/* TODO: Set authentication context for secured APIs that calls Login function if no token is accessable 
+   TODO: Set check for Auth token */
+
+
 function App() {
   
   // const [token, setToken] = useState();

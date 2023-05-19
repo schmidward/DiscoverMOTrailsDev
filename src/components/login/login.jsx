@@ -28,7 +28,8 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
-
+  /* TODO: SET global authorization header for Axios
+     TODO: Set user infomration based on login */
 
 
   async function getUser(username, password) {

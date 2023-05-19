@@ -11,7 +11,7 @@ function Header() {
             <div className='header-container'>
             <div className='logo'>
                 {/* <Link to="/">DiscoverMOTrails</Link> */}
-                <h1>Welcome {user.name} to DiscoverMOTrails</h1>
+                <h1>Welcome {user.displayName} to DiscoverMOTrails</h1>
             </div>
                 <nav>
                     <ul className='nav-links'>
