@@ -60,8 +60,8 @@ public class ProjectSecurityConfig {
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/account","/user").authenticated()
-                    .requestMatchers("/index", "/register", "/secure").permitAll()
+                    .requestMatchers("/account","/user", "/secure").authenticated()
+                    .requestMatchers("/index", "/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();

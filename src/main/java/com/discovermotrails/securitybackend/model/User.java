@@ -9,9 +9,9 @@ import java.util.Set;
 
 @Entity
 public class User extends AbstractEntity implements UserDetails {
-    //TODO: Create abstract entity to extend for the model classes
 
-    //The generated value annotations need the "native" things in them so that only the backend database will worry about id value generation
+
+
 
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -56,6 +56,8 @@ public class User extends AbstractEntity implements UserDetails {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
+
+    public boolean isAccountLoggedIn() { return true; }
 
     @Override
     public boolean isAccountNonExpired() {
