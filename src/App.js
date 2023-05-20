@@ -7,19 +7,16 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import Header from './components/header/header.js'
 import SecurePage from './pages/securePage.js';
-import { UserContextProvider } from './context/userContext';
+import { UserContextProvider, useUserContext } from './context/userContext';
+import authCheck from './utils/authCheck';
 
 /* TODO: Set authentication context for secured APIs that calls Login function if no token is accessable 
    TODO: Set check for Auth token */
 
 
 function App() {
+authCheck();
   
-  // const [token, setToken] = useState();
-
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
 
   return (
     
