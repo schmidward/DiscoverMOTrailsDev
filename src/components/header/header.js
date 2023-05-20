@@ -9,9 +9,18 @@ function Header() {
     console.log(user);
     const loggedInStatus = () => {
         if (user.isLoggedIn === false) {
-            return `You are not logged in`;
+            return {
+                path: '/login',
+                displayText: 'Login',
+                msg: 'You are not logged in'
+            };
         } else {
-            return `Logged in as: ${user.displayName}`;
+            return {
+                path: '/logout',
+                displayText: 'Logout',
+                msg: `Logged in as: ${user.displayName}`
+            };
+            
         }
     }
 
@@ -27,7 +36,7 @@ function Header() {
                             <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <Link to="/login">Login</Link>
+                            <Link to={loggedInStatus().path}>{loggedInStatus().displayText}</Link>
                         </li>
                         <li>
                             <Link to="/Register">Register</Link>
@@ -36,7 +45,7 @@ function Header() {
                 </nav>
             </div>
             <div className='logged-in-as'>
-                <p>{loggedInStatus()}</p>
+                <p>{loggedInStatus().msg}</p>
             </div>
         </header>
     );

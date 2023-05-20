@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { createContext, useState } from "react";
 import User from "./user";
 
+
 export const userContext = createContext({
     user: null,
     logIn: () => {},

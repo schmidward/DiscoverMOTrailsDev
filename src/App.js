@@ -7,6 +7,8 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import Header from './components/header/header.js'
 import SecurePage from './components/securePage/securePage.js';
+import Logout from './components/logout/logout';
+
 import { UserContextProvider, useUserContext } from './context/userContext';
 import authCheck from './utils/authCheck';
 
@@ -29,6 +31,7 @@ authCheck();
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/secure" exact element={<SecurePage />} />
+          <Route path="/logout" exact element={<Logout />} />
       </Routes>
       </div>
     </Router>
