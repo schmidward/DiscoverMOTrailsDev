@@ -8,6 +8,7 @@ import Register from './components/register/register';
 import Header from './components/header/header.js'
 import SecurePage from './components/securePage/securePage.jsx';
 import Logout from './components/logout/logout';
+import Protected from './utils/protected';
 
 import { UserContextProvider, useUserContext } from './context/userContext';
 import authCheck from './utils/authCheck';
@@ -17,7 +18,6 @@ import authCheck from './utils/authCheck';
 
 
 function App() {
-authCheck();
   
 
   return (
@@ -30,7 +30,15 @@ authCheck();
           <Route path="/" exact element={<Home/>} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
-          <Route path="/secure" exact element={<SecurePage />} />
+        {/* TODO: FIX ERROR WHERE IT ALWAYS REDIRECTS TO THE LOGIN PAGE */}
+          <Route 
+              path="/secure" 
+              element={
+              <Protected>
+                <SecurePage /> 
+              </Protected>
+              }
+              />
           <Route path="/logout" exact element={<Logout />} />
       </Routes>
       </div>
