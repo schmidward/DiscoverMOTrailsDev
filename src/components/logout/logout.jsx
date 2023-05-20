@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const Logout = () => {
-    const {logOut} = useUserContext();
+    const {user, logOut} = useUserContext();
     const [cookies, removeCookie] = useCookies(['Authorization']);
     logOut();
     removeCookie('Authorization');

@@ -38,7 +38,7 @@ const Login = () => {
     ));
     setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
     setCookie('Authorization', response.headers.authorization, { maxAge: 1000}); //maxAge counts in seconds
-    logIn(response.data.id, "dummy display name", response.data.username, response.data.password, response.data.isLoggedIn);
+    logIn(response.data.id, response.data.displayName, response.data.username, response.data.isLoggedIn);
 
     setFormUser('');
 		setPwd('');

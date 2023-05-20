@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from "../../api/axios";
 import { Cookies } from 'react-cookie';
+import { useUserContext } from '../../context/userContext';
 
 function SecurePage() {
     const [data, setData] = useState(null);    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const cookies = new Cookies();
+    const {user, loadUser} = useUserContext();
 
     useEffect(() => async (e) => {
+    loadUser();
+    console.log(user);
     const token = cookies.get('Authorization');
     console.log(token);
     const response = await ( 
@@ -22,19 +26,22 @@ function SecurePage() {
     ));
     console.log(response);
     return setData(response.data);
-
+    
     }, []);
+
 
     if (!data) {
         return <p>Loading...</p>
     }
     
     return (
+        <>
         <div>
             <h1>Protected page</h1>
             <p>{data}</p>
         </div>
-    )
+        </>
+    );
 }
 
 export default SecurePage;
