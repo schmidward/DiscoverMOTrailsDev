@@ -58,7 +58,6 @@ const Register = () => {
         try {
             const response = await axios.post(
                 REGISTER_URL,
-                /* TODO: Convert into a user object */
                 JSON.stringify({ email, pwd, role }),
                 {
                     headers: { "Content-Type": "application/json" },

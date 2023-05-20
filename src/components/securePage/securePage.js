@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from "../../api/axios";
+import { Cookies } from 'react-cookie';
 
 function SecurePage() {
     const [data, setData] = useState(null);    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const cookies = new Cookies();
 
-    useEffect(() => {
-    const response =  
+    useEffect(() => async (e) => {
+    const token = cookies.get('Authorization');
+    console.log(token);
+    const response = await ( 
         axios.get('/secure', {
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": token 
+        },
         withCredentials: true,
         }
-    );
+    ));
     console.log(response);
     return setData(response.data);
 

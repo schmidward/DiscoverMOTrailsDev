@@ -36,10 +36,10 @@ function Header() {
                             <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <Link to={loggedInStatus().path}>{loggedInStatus().displayText}</Link>
+                            <Link to="/Register">Register</Link>
                         </li>
                         <li>
-                            <Link to="/Register">Register</Link>
+                            <Link to={loggedInStatus().path}>{loggedInStatus().displayText}</Link>
                         </li>
                     </ul>
                 </nav>
