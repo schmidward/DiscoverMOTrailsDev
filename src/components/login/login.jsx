@@ -25,7 +25,7 @@ const Login = () => {
 		setErrMsg('');
 	}, [formUser, pwd]);
 
-  const handleSubmit = async (e) => {
+  const authenticate = async (e) => {
     e.preventDefault();
     const response = await (
       axios.get(LOGIN_URL, {
@@ -36,7 +36,6 @@ const Login = () => {
       
     }
     ));
-    console.log(response);
     setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
     setCookie('Authorization', response.headers.authorization, { maxAge: 10}); //maxAge counts in seconds
     logIn(response.data.id, "dummy display name", response.data.username, response.data.password, response.data.isLoggedIn);
@@ -62,7 +61,7 @@ const Login = () => {
             {errMsg}
           </p>
           <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={authenticate}>
             <label htmlFor="username">Email:</label>
             <input
               type="text"

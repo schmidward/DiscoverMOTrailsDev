@@ -6,12 +6,20 @@ import { useUserContext } from '../../context/userContext';
 
 function Header() {
     const {user} = useUserContext();
+    console.log(user);
+    const loggedInStatus = () => {
+        if (user.isLoggedIn === false) {
+            return `You are not logged in`;
+        } else {
+            return `Logged in as: ${user.displayName}`;
+        }
+    }
+
     return (
         <header>
             <div className='header-container'>
             <div className='logo'>
-                {/* <Link to="/">DiscoverMOTrails</Link> */}
-                <h1>Welcome {user.displayName} to DiscoverMOTrails</h1>
+                <h1><Link to="/">DiscoverMOTrails</Link></h1>
             </div>
                 <nav>
                     <ul className='nav-links'>
@@ -26,6 +34,9 @@ function Header() {
                         </li>
                     </ul>
                 </nav>
+            </div>
+            <div className='logged-in-as'>
+                <p>{loggedInStatus()}</p>
             </div>
         </header>
     );

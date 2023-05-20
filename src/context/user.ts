@@ -3,14 +3,14 @@ export default class User {
     displayName: string;
     email: string;
     password: string;
-    accountLoggedIn: boolean;
+    isLoggedIn: boolean;
 
-    constructor(id: number, displayName: string, email: string, password: string, accountLoggedIn: boolean) {
+    constructor(id: number, displayName: string, email: string, password: string, isLoggedIn: boolean) {
         this.id = id;
         this.displayName = displayName;
         this.email = email;
         this.password = password;
-        this.accountLoggedIn = accountLoggedIn;
+        this.isLoggedIn = isLoggedIn;
     }    
 
 }

@@ -5,7 +5,7 @@ import authCheck from "./authCheck";
 const Protected = ({ isLoggedIn, children }) => {
     const {user} = useUserContext();
     authCheck();
-    if (user.isLoggedIn == false) {
+    if (user.isLoggedIn === false) {
         return <Navigate to="/login" replace />;
     } 
     return children;
