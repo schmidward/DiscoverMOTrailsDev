@@ -6,7 +6,7 @@ import Home from './components/home/home.jsx';
 import Login from './components/login/login';
 import Register from './components/register/register';
 import Header from './components/header/header.js'
-import SecurePage from './pages/securePage.js';
+import SecurePage from './components/securePage/securePage.js';
 import { UserContextProvider, useUserContext } from './context/userContext';
 import authCheck from './utils/authCheck';
 
