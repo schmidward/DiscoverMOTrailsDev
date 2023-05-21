@@ -16,6 +16,8 @@ const Register = () => {
 
     const userRef = useRef();
     const errRef = useRef();
+    const [displayName, setDisplayName] = useState("");
+    const [dislayNameFocus, setDisplayNameFocus] = useState(false);
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
@@ -58,7 +60,7 @@ const Register = () => {
         try {
             const response = await axios.post(
                 REGISTER_URL,
-                JSON.stringify({ email, pwd, role }),
+                JSON.stringify({displayName, email, pwd, role }),
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
@@ -94,6 +96,44 @@ const Register = () => {
                 </p>
                 <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
+                    <label htmlFor="displayName">
+                        Username:
+                        {/* <FontAwesomeIcon
+                        icon={faCheck}
+                        className={ validEmail ? 'valid' : 'hide' }
+                        />
+                        <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                            validEmail || !email ? "hide" : "invalid"
+                        }
+                        /> */}
+                    </label>
+                    <input
+                        type="text"
+                        id="displayName"
+                        // ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        value={displayName}
+                        required
+                        // aria-invalid={validEmail ? "false" : "true"}
+                        aria-describedby="uidnote"
+                        onFocus={() => setDisplayNameFocus(true)}
+                        onBlur={() => setDisplayNameFocus(false)}
+                    />
+                    {/* <p
+                        id="uidnote"
+                        className={
+                        userFocus && email && !validEmail
+                            ? "instructions"
+                            : "offscreen"
+                        }
+                    >
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        Enter a vaild email in address.
+                    </p> */}
+                    
                     <label htmlFor="email">
                         Email:
                         <FontAwesomeIcon

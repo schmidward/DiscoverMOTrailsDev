@@ -24,6 +24,7 @@ function Header() {
     }
 
     return (
+        <>
         <header>
             <div className='header-container'>
             <div className='logo'>
@@ -47,6 +48,7 @@ function Header() {
                 <p>{loggedInStatus().msg}</p>
             </div>
         </header>
+        </>
     );
 }
 

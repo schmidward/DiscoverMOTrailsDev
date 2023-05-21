@@ -5,7 +5,7 @@ import './App.css'
 import Home from './components/home/home.jsx';
 import Login from './components/auth/auth';
 import Register from './components/register/register';
-import Header from './components/header/header.js'
+import Header from './components/header/header.jsx'
 import SecurePage from './components/securePage/securePage.jsx';
 import Logout from './components/logout/logout';
 import Protected from './utils/protected';
@@ -29,7 +29,6 @@ function App() {
           <Route path="/" exact element={<Home/>} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
-        {/* TODO: FIX ERROR WHERE IT ALWAYS REDIRECTS TO THE LOGIN PAGE */}
           <Route 
               path="/secure" 
               element={
