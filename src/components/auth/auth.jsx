@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import axios from "../../api/axios";
-import './login.css';
+import './auth.css';
 import { useCookies } from 'react-cookie';
 import { useUserContext } from "../../context/userContext";
 
@@ -37,18 +37,13 @@ const Login = () => {
     }
     ));
     setCookie('XSRF-TOKEN', response.headers["x-xsrf-token"]);
-    setCookie('Authorization', response.headers.authorization, { maxAge: 1000}); //maxAge counts in seconds
+    setCookie('Authorization', response.headers.authorization, { maxAge: 10000}); //maxAge counts in seconds
     logIn(response.data.id, response.data.displayName, response.data.username, response.data.isLoggedIn);
 
     setFormUser('');
 		setPwd('');
 		setSuccess(true);
   }
-
-  /* TODO: SET global authorization header for Axios
-     TODO: Set user infomration based on login */
-
-
 
   return (
     <>

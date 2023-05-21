@@ -8,10 +8,9 @@ function SecurePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const cookies = new Cookies();
-    const {user, loadUser} = useUserContext();
+    const {user} = useUserContext();
 
     useEffect(() => async (e) => {
-    loadUser();
     console.log(user);
     const token = cookies.get('Authorization');
     console.log(token);
