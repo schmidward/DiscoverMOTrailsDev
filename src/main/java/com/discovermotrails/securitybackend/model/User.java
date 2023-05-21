@@ -12,11 +12,19 @@ public class User extends AbstractEntity implements UserDetails {
 
 
 
-
+    private String displayName;
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
     private String role;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     @Override
     public String getUsername() {
