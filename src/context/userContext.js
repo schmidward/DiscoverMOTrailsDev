@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { createContext, useState } from "react";
 import User from "./user";
 
@@ -16,26 +16,26 @@ const USER = new User(0, "Guest",      "",      false);
 export function UserContextProvider({ children }) {
     const [user, setUser] = useState(USER);
 
+    useEffect(() => {
+        const data = localStorage.getItem("User");
+        setUser(JSON.parse(data));
+    }, [])
+
 
     function loadUser() {
-        return (new User(localStorage.getItem("id"), localStorage.getItem("displayName"), localStorage.getItem("email"), localStorage.getItem("isLoggedIn")));
+        const storedUser = localStorage.getItem("User");
+        setUser(JSON.parse(storedUser));
     }
 
     function logIn(id, displayName, email) {
-        setUser(new User(id, displayName, email, true));
-        localStorage.setItem("id", id);
-        localStorage.setItem("displayName", displayName);
-        localStorage.setItem("email", email);
-        localStorage.setItem("isLoggedIn", true);
-
+        const authedUser = new User(id, displayName, email, true);
+        setUser(authedUser);
+        localStorage.setItem("User", JSON.stringify(authedUser));
     }
 
     function logOut() {
         setUser(USER);
-        localStorage.removeItem("id");
-        localStorage.removeItem("displayName");
-        localStorage.removeItem("email");
-        localStorage.removeItem("isLoggedIn");
+        localStorage.setItem("User", JSON.stringify(USER));
     }
 
     return (
