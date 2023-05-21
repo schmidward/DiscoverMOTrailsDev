@@ -11,9 +11,7 @@ function SecurePage() {
     const {user} = useUserContext();
 
     useEffect(() => async (e) => {
-    console.log(user);
     const token = cookies.get('Authorization');
-    console.log(token);
     const response = await ( 
         axios.get('/secure', {
         headers: { 
@@ -23,9 +21,7 @@ function SecurePage() {
         withCredentials: true,
         }
     ));
-    console.log(response);
     return setData(response.data);
-    
     }, []);
 
 

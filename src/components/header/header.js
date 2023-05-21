@@ -6,7 +6,6 @@ import { useUserContext } from '../../context/userContext';
 
 function Header() {
     const {user} = useUserContext();
-    console.log(user);
     const loggedInStatus = () => {
         if (user.isLoggedIn === false) {
             return {

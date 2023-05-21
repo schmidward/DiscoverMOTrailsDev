@@ -11,7 +11,6 @@ import Logout from './components/logout/logout';
 import Protected from './utils/protected';
 
 import { UserContextProvider } from './context/userContext';
-import authCheck from './utils/authCheck';
 
 /* TODO: Set authentication context for secured APIs that calls Login function if no token is accessable 
    TODO: Set check for Auth token */

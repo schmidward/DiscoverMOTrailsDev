@@ -10,7 +10,6 @@ const Protected = ({ children }) => {
     
     function checkAuth() {
         const cookies = new Cookies();
-        console.log(cookies.get('Authorization'));
         if (cookies.get('Authorization') !== undefined) {
             return true;
         }
