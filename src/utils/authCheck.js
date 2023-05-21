@@ -6,6 +6,9 @@ const authCheck = () => {
     const cookies = new Cookies();
     if (cookies.get('Authorization') === undefined) {
         logOut();
+        return false;
+    } else {
+        return true;
     }
 };
 
