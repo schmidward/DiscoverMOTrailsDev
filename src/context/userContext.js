@@ -11,11 +11,14 @@ export const userContext = createContext({
                   // id, displayName, email, isLoggedIn
 const USER = new User(0, "Guest",      "",      false);
 
+// TODO: PUT JSON.STRINGFY FOR USER VALUES
+
 export function UserContextProvider({ children }) {
     const [user, setUser] = useState(USER);
-    
+
+
     function loadUser() {
-        setUser(new User(localStorage.getItem("id"), localStorage.getItem("displayName"), localStorage.getItem("email"), localStorage.getItem("isLoggedIn")));
+        return (new User(localStorage.getItem("id"), localStorage.getItem("displayName"), localStorage.getItem("email"), localStorage.getItem("isLoggedIn")));
     }
 
     function logIn(id, displayName, email) {
@@ -25,8 +28,8 @@ export function UserContextProvider({ children }) {
         localStorage.setItem("email", email);
         localStorage.setItem("isLoggedIn", true);
 
-
     }
+
     function logOut() {
         setUser(USER);
         localStorage.removeItem("id");
@@ -36,14 +39,14 @@ export function UserContextProvider({ children }) {
     }
 
     return (
-        <userContext.Provider value={{ user, loadUser, logIn, logOut }}>
+        <userContext.Provider value={{ user, setUser, loadUser, logIn, logOut }}>
             { children }
         </userContext.Provider>
     );
 }
 
 export function useUserContext() {
-    const {user, loadUser, logIn, logOut} = useContext(userContext);
+    const {user, setUser, loadUser, logIn, logOut} = useContext(userContext);
 
-    return {user, loadUser, logIn, logOut};
+    return {user, setUser, loadUser, logIn, logOut};
 }

@@ -10,7 +10,7 @@ import SecurePage from './components/securePage/securePage.jsx';
 import Logout from './components/logout/logout';
 import Protected from './utils/protected';
 
-import { UserContextProvider, useUserContext } from './context/userContext';
+import { UserContextProvider } from './context/userContext';
 import authCheck from './utils/authCheck';
 
 /* TODO: Set authentication context for secured APIs that calls Login function if no token is accessable 
@@ -18,7 +18,7 @@ import authCheck from './utils/authCheck';
 
 
 function App() {
-  
+
 
   return (
     

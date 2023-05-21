@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useUserContext } from "../../context/userContext";
 import { Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const Logout = () => {
-    const {user, logOut} = useUserContext();
+    const {logOut} = useUserContext();
     const [cookies, removeCookie] = useCookies(['Authorization']);
-    logOut();
-    removeCookie('Authorization');
+     
+    useEffect(() => {
+        logOut();
+        removeCookie('Authorization');
+    }, []);
+    
 
     return <Navigate to="/" />
 }
